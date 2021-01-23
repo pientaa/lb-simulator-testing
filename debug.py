@@ -18,8 +18,18 @@ def debug():
     print(sequential_completed)
 
     salp_allocation = pd.read_csv("./SALP/shard_allocated_6.csv")
+    random_allocation = pd.read_csv("./random/shard_allocated_6.csv")
+    sequential_allocation = pd.read_csv("./sequential/shard_allocated_6.csv")
 
-    for (node, shards) in salp_allocation.groupby('node'):
+    print_allocation_load(salp_allocation, requests, "SALP")
+    print_allocation_load(random_allocation, requests, "random")
+    print_allocation_load(sequential_allocation, requests, "sequential")
+
+
+def print_allocation_load(allocation_df, requests, algorithm):
+    print("-------------------------------------")
+    print("--------------  " + algorithm + "  --------------")
+    for (node, shards) in allocation_df.groupby('node'):
         requests_per_node = requests[requests["shard"].isin(shards["shard"].to_list())]
 
         print("Load:")
