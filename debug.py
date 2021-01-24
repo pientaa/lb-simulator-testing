@@ -62,10 +62,8 @@ def print_allocation_load(allocation_df, requests, algorithm, shard_load):
     for (node, shards) in allocation_df.groupby('node'):
         requests_per_node = requests[requests["shard"].isin(shards["shard"].to_list())]
 
-        print("Load:")
-        print(requests_per_node['load'].sum())
-        print("Num of shards:")
-        print(shards.shape[0])
+        print("Node: ", str(node), " load: ", str(round(requests_per_node['load'].sum()/5.0, 2)))
+        print("Num of shards: " + str(shards.shape[0]))
 
 
 if __name__ == "__main__":
